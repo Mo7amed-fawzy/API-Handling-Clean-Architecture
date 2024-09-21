@@ -1,11 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:happy_tech_mastering_api_with_flutter/core/api_Consumer.dart';
+import 'package:happy_tech_mastering_api_with_flutter/core/api_Interceptors.dart';
 import 'package:happy_tech_mastering_api_with_flutter/core/errors/exceptions.dart';
 
 class DioConsumer extends APIConsumer {
   final Dio dio;
 
-  DioConsumer({required this.dio});
+  DioConsumer({required this.dio}) {
+    {
+      //بعمل كدا عشان اتحكم فالدايو بتعتي بحيث اضيف ستارت بوينت الهي باث يوارال والباث هو الاند بوينت
+      //عشان اللينك يكون ثابت واتحكم فالاند بوينت بس
+      dio.options.baseUrl = "https://food-api-omega.vercel.app/api/v1/";
+      //Endpoint.basUrl
+      dio.interceptors.add(ApiInterceptors()); // ببعت الهيدرز مع الريكويست
+      dio.interceptors.add(
+        LogInterceptor(
+          // بيراقب برضه بس بيطبعلي العاوزو
+          request: true,
+          requestHeader: true,
+          requestBody: true,
+          responseHeader: true,
+          responseBody: true,
+          error: true,
+        ),
+      ); // بيطبعلي تفاصيل الريكويست كلها
+      // باخد اوبجكت من الدايو واستقبلها فالكونستركتور
+    }
+  }
 
   @override
   Future delet(
