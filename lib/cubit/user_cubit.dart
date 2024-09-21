@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cubit/user_state.dart';
@@ -25,4 +26,26 @@ class UserCubit extends Cubit<UserState> {
   TextEditingController signUpPassword = TextEditingController();
   //Sign up confirm password
   TextEditingController confirmPassword = TextEditingController();
+
+  signIn() async {
+    // دي بوست ريكويست -ابعت يتشك عليها ويرجع توكن لو كانت الداتا صح
+    try {
+      emit(UserSignInLoading());
+      final respons = await Dio().post(
+        "https://food-api-omega.vercel.app/api/v1/user/signin",
+        // دا لينك الايبياي البستعمله + ببعت البادي الهو داتا
+        data: {
+          "email": signInEmail.text,
+          "password": signInPassword.text,
+        },
+      );
+      emit(UserSignInSuccess());
+      // ignore: avoid_print
+      print(respons);
+    } catch (e) {
+      emit(UserSignInFailure(errMessage: e.toString()));
+      // ignore: avoid_print
+      print(e.toString());
+    }
+  }
 }
