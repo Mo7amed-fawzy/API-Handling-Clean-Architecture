@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:happy_tech_mastering_api_with_flutter/core/errors/errorModel.dart';
+import 'package:happy_tech_mastering_api_with_flutter/core/errors/error_model.dart';
 
 class ServerException implements Exception {
   // كريت اكسبشن خاص بيا
@@ -8,7 +8,7 @@ class ServerException implements Exception {
   ServerException({required this.errorModel});
 }
 
-void HandleDioExceptions(DioException e) {
+void handleDioExceptions(DioException e) {
   switch (e.type) {
     case DioExceptionType.connectionTimeout:
       throw ServerException(errorModel: ErrorModel.fromjson(e.response!.data));
