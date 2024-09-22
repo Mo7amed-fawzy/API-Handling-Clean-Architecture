@@ -73,6 +73,7 @@ class SignInScreen extends StatelessWidget {
                                   innerText: 'Sign In',
                                   onPressed: () {
                                     context.read<UserCubit>().signIn();
+                                    // print('انا دخلت علي تسجيل الدخول');
                                     // Navigator.push(
                                     //   context,
                                     //   MaterialPageRoute(
