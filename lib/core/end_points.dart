@@ -2,6 +2,7 @@
 class Endpoint {
   static String basUrl = "https://food-api-omega.vercel.app/api/v1/";
   static String signIn = "user/signin";
+  static String signUp = "user/signup";
 }
 
 class ApiKey {
@@ -12,4 +13,10 @@ class ApiKey {
   static String token = "token"; // هفك تشفيرو ويبقي عندي ايدي
   static String message = "message";
   static String id = "id";
+
+  static String name = "name";
+  static String phone = "phone";
+  static String confirmPassword = "confirmPassword";
+  static String location = "location";
+  static String profilePic = "profilePic";
 }
