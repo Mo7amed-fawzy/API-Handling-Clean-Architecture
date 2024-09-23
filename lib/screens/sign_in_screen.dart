@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cubit/user_cubit.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cubit/user_state.dart';
+import 'package:happy_tech_mastering_api_with_flutter/screens/profile_screen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/widgets/custom_form_button.dart';
 import 'package:happy_tech_mastering_api_with_flutter/widgets/custom_input_field.dart';
 import 'package:happy_tech_mastering_api_with_flutter/widgets/dont_have_an_account.dart';
@@ -21,6 +23,19 @@ class SignInScreen extends StatelessWidget {
         if (state is UserSignInSuccess) {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text("Success")));
+
+          context.read<UserCubit>().getUserProfile();
+          // هعمل جيت للداتا
+
+          if (kDebugMode) {
+            print('انا دخلت علي تسجيل الدخول');
+          }
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ProfileScreen(),
+            ),
+          );
         } else if (state is UserSignInFailure) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.errMessage)));
@@ -73,13 +88,6 @@ class SignInScreen extends StatelessWidget {
                                   innerText: 'Sign In',
                                   onPressed: () {
                                     context.read<UserCubit>().signIn();
-                                    // print('انا دخلت علي تسجيل الدخول');
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => const ProfileScreen(),
-                                    //   ),
-                                    // );
                                   },
                                 ),
                           const SizedBox(height: 18),

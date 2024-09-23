@@ -7,6 +7,7 @@ import 'package:happy_tech_mastering_api_with_flutter/core/errors/exceptions.dar
 import 'package:happy_tech_mastering_api_with_flutter/core/functions/upload_image_to_api.dart';
 import 'package:happy_tech_mastering_api_with_flutter/core/models/sign_in_model.dart';
 import 'package:happy_tech_mastering_api_with_flutter/core/models/sign_up_model.dart';
+import 'package:happy_tech_mastering_api_with_flutter/core/models/user_model.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cubit/user_state.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -101,6 +102,21 @@ class UserCubit extends Cubit<UserState> {
       emit(UserSignUpSuccess(message: signupmodel.message));
     } on ServerException catch (e) {
       emit(UserSignUpFailure(errMessage: e.errorModel.errorMessage));
+      // الاولي دي الاوبجكت من الايرورموديل والتانيه بطلع من الاولي الايرور
+    }
+  }
+
+  getUserProfile() async {
+    try {
+      emit(GetUserLoading());
+      final response = await api.get(
+        Endpoint.getUserDataEndPoint(
+          CacheHelper().getData(key: ApiKey.id),
+        ),
+      );
+      emit(GetUserSuccess(user: UserModel.fromJson(response)));
+    } on ServerException catch (e) {
+      emit(GetUserFailure(errMessage: e.errorModel.errorMessage));
     }
   }
 }
