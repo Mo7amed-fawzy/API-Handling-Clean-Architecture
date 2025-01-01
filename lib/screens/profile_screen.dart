@@ -4,7 +4,9 @@ import 'package:happy_tech_mastering_api_with_flutter/cubit/user_cubit.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cubit/user_state.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +19,31 @@ class ProfileScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            title: state is GetUserSuccess ? Text(state.user.name) : null,
+            actions: [
+              IconButton(
+                icon: state is UpdateUserModifying
+                    ? const Icon(
+                        Icons.cancel) // أيقونة علامة الإلغاء عند التعديل
+                    : const Icon(
+                        Icons.edit), // أيقونة التعديل في الحالة العادية
+                onPressed: () {
+                  // if (state is UpdateUserModifying) {
+                  //   // العودة إلى الحالة الأصلية
+                  //   BlocProvider.of<UserCubit>(context)
+                  //       .emit(GetUserSuccess(state.user));
+                  // } else {
+                  //   // الانتقال إلى حالة UpdateUserModifying
+                  //   BlocProvider.of<UserCubit>(context)
+                  //       .emit(UpdateUserModifying(state.user));
+                  // }
+                },
+              ),
+            ],
+          ),
           body: state is GetUserLoading
-              ? const CircularProgressIndicator()
+              ? const Center(child: CircularProgressIndicator())
               : state is GetUserSuccess
                   ? ListView(
                       children: [
@@ -32,10 +57,10 @@ class ProfileScreen extends StatelessWidget {
                         const SizedBox(height: 16),
 
                         //! Name
-                        ListTile(
-                          title: Text(state.user.name),
-                          leading: const Icon(Icons.person),
-                        ),
+                        // ListTile(
+                        //   title: Text(state.user.name),
+                        //   leading: const Icon(Icons.person),
+                        // ),
                         const SizedBox(height: 16),
 
                         //! Email

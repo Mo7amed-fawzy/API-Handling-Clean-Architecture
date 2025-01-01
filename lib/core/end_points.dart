@@ -6,6 +6,8 @@ class Endpoint {
   static String getUserDataEndPoint(id) {
     return 'user/get-user/$id';
   }
+
+  static String updateuser = "user/update";
 }
 
 class ApiKey {
@@ -16,7 +18,7 @@ class ApiKey {
   static String token = "token"; // هفك تشفيرو ويبقي عندي ايدي
   static String message = "message";
   static String id = "id";
-
+  
   static String name = "name";
   static String phone = "phone";
   static String confirmPassword = "confirmPassword";

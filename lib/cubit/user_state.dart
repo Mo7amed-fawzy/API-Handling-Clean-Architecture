@@ -30,7 +30,7 @@ final class UserSignUpFailure extends UserState {
 }
 
 final class GetUserSuccess extends UserState {
-  final UserModel user;
+  final GetUserModel user;
 
   GetUserSuccess({required this.user});
 }
@@ -42,3 +42,11 @@ final class GetUserFailure extends UserState {
 
   GetUserFailure({required this.errMessage});
 }
+
+final class UpdateUserDataLoading extends UserState {}
+
+final class UpdateUserDataSuccess extends UserState {}
+
+final class UpdateUserDataFailure extends UserState {}
+
+final class UpdateUserModifying extends UserState {}

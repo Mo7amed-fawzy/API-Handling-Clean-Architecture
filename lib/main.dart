@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cache/cahce_helper.dart';
 import 'package:happy_tech_mastering_api_with_flutter/core/dio_consumer.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cubit/user_cubit.dart';
+import 'package:happy_tech_mastering_api_with_flutter/repo/user_repo.dart';
 import 'package:happy_tech_mastering_api_with_flutter/screens/sign_in_screen.dart';
 
 void main() {
@@ -11,7 +12,8 @@ void main() {
   CacheHelper().init();
   runApp(
     BlocProvider(
-      create: (context) => UserCubit(DioConsumer(dio: Dio())),
+      create: (context) =>
+          UserCubit(UserrepoImpel(api: DioConsumer(dio: Dio()))),
       child: const MyApp(),
     ),
   );
