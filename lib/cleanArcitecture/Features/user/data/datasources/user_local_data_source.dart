@@ -6,7 +6,8 @@ import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/errors/ex
 
 class UserLocalDataSource {
   final CacheHelper cache;
-  final String lastUserKey = "CachedUser";
+  final String lastUserKey =
+      "CachedUser"; // كيي بستعمله لتحديد موقع تخزين بيانات المستخدم داخل الكاش
 
   UserLocalDataSource({required this.cache});
   // ياما هخزن فالكاش ياما هجيب اخر حاجه عندنا فالكاش
@@ -29,10 +30,17 @@ class UserLocalDataSource {
 // الميثود بختصار باخد بيانات اليوزر الجايه من النت بخزنها بكيي وفاليو والفاليو معمولها انكود علشان تتخزن كسترنج
 
   Future<UserModel> getLastUser() {
+    //يتم تحويل JSON إلى كائن UserModel باستخدام الدالة UserModel.fromJson().
+
     final String? jsonString = cache.getData(key: lastUserKey);
 
     if (jsonString != null) {
-      return Future.value(UserModel.fromJson(jsonDecode(jsonString)));
+      return Future.value(
+        UserModel.fromJson(
+          jsonDecode(jsonString),
+          //Future.value تُستخدم لإنشاء كائن Future يُعيد قيمة جاهزة على الفور (بمعنى أنها لا تحتاج إلى انتظار عمليات غير متزامنة مثل طلبات الشبكة أو الاستعلامات من قاعدة البيانات).
+        ),
+      );
     } else {
       throw CacheException(errorMessage: 'No InterNet Conncetion');
     }
