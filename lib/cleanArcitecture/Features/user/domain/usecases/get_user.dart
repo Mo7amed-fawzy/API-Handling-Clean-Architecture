@@ -8,9 +8,9 @@ import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/errors/fa
 class GetUser {
   final UserRepository repository;
 
-  GetUser(this.repository);
+  GetUser({required this.repository});
 
-  Future<Either<Failure, UserEntitiy>> call({required UserParams params}) {
+  Future<Either<Failure, UserEntity>> call({required UserParams params}) {
     return repository.getUser(params: params);
   }
 }

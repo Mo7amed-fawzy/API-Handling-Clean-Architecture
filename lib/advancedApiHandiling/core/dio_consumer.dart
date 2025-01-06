@@ -1,26 +1,31 @@
 import 'package:dio/dio.dart';
-import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/Core/databases/api/api_consumer.dart';
-import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/Core/databases/api/end_point.dart';
-import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/errors/exceptions.dart';
+import 'package:happy_tech_mastering_api_with_flutter/advancedApiHandiling/core/api_consumer.dart';
+import 'package:happy_tech_mastering_api_with_flutter/advancedApiHandiling/core/api_interceptors.dart';
+import 'package:happy_tech_mastering_api_with_flutter/advancedApiHandiling/core/end_points.dart';
+import 'package:happy_tech_mastering_api_with_flutter/advancedApiHandiling/core/errors/exceptions.dart';
 
 class DioConsumer extends APIConsumer {
   final Dio dio;
 
   DioConsumer({required this.dio}) {
     {
-      dio.options.baseUrl = EndPoint.baseUrl;
+      //بعمل كدا عشان اتحكم فالدايو بتعتي بحيث اضيف ستارت بوينت الهي باث يوارال والباث هو الاند بوينت
+      //عشان اللينك يكون ثابت واتحكم فالاند بوينت بس
+      dio.options.baseUrl = Endpoint.basUrl;
 
-      // dio.interceptors.add(ApiInterceptors()); // ببعت الهيدرز مع الريكويست
-      // dio.interceptors.add(
-      //   LogInterceptor(
-      //     request: true,
-      //     requestHeader: true,
-      //     requestBody: true,
-      //     responseHeader: true,
-      //     responseBody: true,
-      //     error: true,
-      //   ),
-      // );
+      dio.interceptors.add(ApiInterceptors()); // ببعت الهيدرز مع الريكويست
+      dio.interceptors.add(
+        LogInterceptor(
+          // بيراقب برضه بس بيطبعلي العاوزو
+          request: true,
+          requestHeader: true,
+          requestBody: true,
+          responseHeader: true,
+          responseBody: true,
+          error: true,
+        ),
+      ); // بيطبعلي تفاصيل الريكويست كلها
+      // باخد اوبجكت من الدايو واستقبلها فالكونستركتور
     }
   }
 
@@ -38,6 +43,7 @@ class DioConsumer extends APIConsumer {
               queryParameters: queryparameters);
       return response.data;
     } on DioException catch (e) {
+      // بقولو لو حصل دايو اكسبشن
       handleDioExceptions(e);
     }
   }
@@ -85,7 +91,7 @@ class DioConsumer extends APIConsumer {
         path,
         data: isFormData ? FormData.fromMap(data) : data,
         queryParameters: queryparameters,
-      );
+      ); // بحولها فورم داتا عشان يتوافق مع الشكل الفقاعدة البيانات
       return response.data;
     } on DioException catch (e) {
       handleDioExceptions(e);

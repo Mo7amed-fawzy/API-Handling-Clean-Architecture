@@ -1,6 +1,14 @@
+import 'package:flutter/foundation.dart';
+
 class EndPoint {
-  static const String baseUrl = "http://jsonplaceholder.typicode.com/";
+  static const String baseUrl = "https://jsonplaceholder.typicode.com/";
   static const String user = "users/";
+}
+
+printHere(var obj) {
+  if (kDebugMode) {
+    print(obj);
+  }
 }
 
 // بنادي عليهم من اسم الكلاس علطول static
@@ -20,6 +28,7 @@ class ApiKey {
   static String phone = "phone";
   static String website = "website";
   static String company = "company";
+  static String companyName = "name";
   static String catchPhrase = "catchPhrase";
   static String bs = "bs";
 }

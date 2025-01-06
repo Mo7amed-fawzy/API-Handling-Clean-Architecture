@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/Core/databases/api/end_point.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/errors/error_model.dart';
 
 class ServerException implements Exception {
@@ -46,46 +47,47 @@ class ForbiddenException extends ServerException {
 void handleDioExceptions(DioException e) {
   final data = e.response?.data ?? {};
 
-  switch (e.type) {
-    case DioExceptionType.connectionTimeout:
-      throw ConnectionTimeoutException(ErrorModel.fromjson(data));
+  printHere('Response data: $data');
 
-    case DioExceptionType.sendTimeout:
-      throw ServerException(ErrorModel.fromjson(data));
-
-    case DioExceptionType.receiveTimeout:
-      throw ServerException(ErrorModel.fromjson(data));
-
-    case DioExceptionType.badCertificate:
-      throw ServerException(ErrorModel.fromjson(data));
-
-    case DioExceptionType.cancel:
-      throw ServerException(ErrorModel.fromjson(data));
-
-    case DioExceptionType.connectionError:
-      throw ServerException(ErrorModel.fromjson(data));
-
-    case DioExceptionType.unknown:
-      throw ServerException(ErrorModel.fromjson(data));
-
-    case DioExceptionType.badResponse:
-      switch (e.response?.statusCode) {
-        case 400:
-          throw ServerException(ErrorModel.fromjson(data));
-        case 401:
-          throw ServerException(ErrorModel.fromjson(data));
-        case 403:
-          throw ServerException(ErrorModel.fromjson(data));
-        case 404:
-          throw ServerException(ErrorModel.fromjson(data));
-        case 409:
-          throw ServerException(ErrorModel.fromjson(data));
-        case 422:
-          throw ServerException(ErrorModel.fromjson(data));
-        case 504:
-          throw ServerException(ErrorModel.fromjson(data));
-        default:
-          throw ServerException(ErrorModel.fromjson(data));
-      }
+  if (data is Map<String, dynamic> && data.isNotEmpty) {
+    // إذا كانت البيانات غير فارغة وبالنوع الصحيح
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+        throw ConnectionTimeoutException(ErrorModel.fromjson(data));
+      case DioExceptionType.sendTimeout:
+        throw ServerException(ErrorModel.fromjson(data));
+      case DioExceptionType.receiveTimeout:
+        throw ServerException(ErrorModel.fromjson(data));
+      case DioExceptionType.badCertificate:
+        throw ServerException(ErrorModel.fromjson(data));
+      case DioExceptionType.cancel:
+        throw ServerException(ErrorModel.fromjson(data));
+      case DioExceptionType.connectionError:
+        throw ServerException(ErrorModel.fromjson(data));
+      case DioExceptionType.unknown:
+        throw ServerException(ErrorModel.fromjson(data));
+      case DioExceptionType.badResponse:
+        switch (e.response?.statusCode) {
+          case 400:
+            throw ServerException(ErrorModel.fromjson(data));
+          case 401:
+            throw ServerException(ErrorModel.fromjson(data));
+          case 403:
+            throw ServerException(ErrorModel.fromjson(data));
+          case 404:
+            throw ServerException(ErrorModel.fromjson(data));
+          case 409:
+            throw ServerException(ErrorModel.fromjson(data));
+          case 422:
+            throw ServerException(ErrorModel.fromjson(data));
+          case 504:
+            throw ServerException(ErrorModel.fromjson(data));
+          default:
+            throw ServerException(ErrorModel.fromjson(data));
+        }
+    }
+  } else {
+    // معالجة الحالة عندما تكون البيانات فارغة أو غير صالحة
+    throw Exception('Received empty or invalid data format');
   }
 }

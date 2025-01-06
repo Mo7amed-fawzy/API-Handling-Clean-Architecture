@@ -3,7 +3,7 @@ import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/Features/
 import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/Features/user/data/models/sub_models/company_model.dart';
 import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/Features/user/domain/entites/user_entitiy.dart';
 
-class UserModel extends UserEntitiy {
+class UserModel extends UserEntity {
   // السوبر هي الحجات المحتاجها وهبعتها جوا الانتيتي بتعتي والباقي هتعامل معاها عادي بستعبلو فالمودل دا
   // يعني مثلا انا الادرسس محتاجو فسوبر واليوزر نام مش محتاجو فزيس
   // هستقبل username دا محتاجو انما الباقي انا مش محتاجو فهبعتو فال superModel بتاعي
@@ -33,7 +33,7 @@ class UserModel extends UserEntitiy {
       username: json[ApiKey.username],
       website: json[ApiKey.website],
       // دول مميزين
-      address: AddressModel.fromjson(json[ApiKey
+      address: AddressModel.fromJson(json[ApiKey
           .address]), // بدل مباصي الجسون علطول لل address لا انا بباصي المودل متخزن فيه الداتا
       company: CompanyModel.fromjson(json[ApiKey.company]),
     );
@@ -48,8 +48,8 @@ class UserModel extends UserEntitiy {
       ApiKey.email: email,
       ApiKey.username: username,
       ApiKey.website: website,
-      ApiKey.address: address,
-      ApiKey.company: company,
+      ApiKey.address: (address as AddressModel).toJson(),
+      ApiKey.company: (company).toJson(),
     };
   }
 }

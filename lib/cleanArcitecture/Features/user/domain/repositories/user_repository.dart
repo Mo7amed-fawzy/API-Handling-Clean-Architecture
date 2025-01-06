@@ -6,5 +6,5 @@ import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/errors/fa
 abstract class UserRepository {
   // الريبو هتفلتر الداتا بتعتي وترجعلي بانتيتي لو تمت بنجاح ولو حصلت مشكلة
   // فاستعملت dartz علشان ارجع بكذا ريتيرن تايب
-  Future<Either<Failure, UserEntitiy>> getUser({required UserParams params});
+  Future<Either<Failure, UserEntity>> getUser({required UserParams params});
 }

@@ -4,11 +4,11 @@ import 'package:happy_tech_mastering_api_with_flutter/cleanArcitecture/Features/
 class GeoModel extends GeoEntity {
   GeoModel({required super.lat, required super.lng});
 
-  factory GeoModel.fromjson(Map<String, dynamic> json) {
+  factory GeoModel.fromJson(Map<String, dynamic> json) {
     return GeoModel(lat: json[ApiKey.lat], lng: json[ApiKey.lng]);
   }
 
-  Map<String, dynamic> tojson() {
+  Map<String, dynamic> toJson() {
     return {
       ApiKey.lat: lat,
       ApiKey.lng: lng,

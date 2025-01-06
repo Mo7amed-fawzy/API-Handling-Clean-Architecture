@@ -20,7 +20,7 @@ class UserRepositoryImpelementation extends UserRepository {
       required this.networkInfo});
 
   @override
-  Future<Either<Failure, UserEntitiy>> getUser(
+  Future<Either<Failure, UserEntity>> getUser(
       {required UserParams params}) async {
     if (await networkInfo.isConnected!) {
       try {
